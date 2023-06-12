@@ -20,6 +20,7 @@ The code is invoked in the terminal using
 ```
 node index
 ```
+A series of prompts is then given using Inquirer to manipulate the database.
 
 ## Contributing
 
