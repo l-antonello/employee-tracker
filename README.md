@@ -17,7 +17,8 @@ The following packages and versions were installed:
 ## Usage
 
 The code is invoked in the terminal using
-```node index
+```
+node index
 ```
 
 ## Contributing
