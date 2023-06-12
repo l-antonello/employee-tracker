@@ -1,22 +1,21 @@
 const connection = require('./config/connection');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-// const chalk = require('chalk');
 const figlet = require('figlet');
-// const validate = require('./javascript/validate');
+const validate = require('./lib/validate');
 
 // Database Connect and Starter Title
-connection.connect((error) => {
-  if (error) throw error;
-  console.log(chalk.blue.bold(`====================================================================================`));
+// connection.connect((error) => {
+//   if (error) throw error;
+  console.log((`====================================================================================`));
   console.log(``);
-  console.log(chalk.yellowBright.bold(figlet.textSync('Employee Tracker')));
+  console.log((figlet.textSync('Employee Tracker')));
   console.log(``);
-  console.log(`                                                          ` + chalk.yellowBright.bold('by: l-antonello'));
+  console.log(`                                                          ` + ('by: l-antonello'));
   console.log(``);
-  console.log(chalk.blue.bold(`====================================================================================`));
-  promptUser();
-});
+  console.log((`====================================================================================`));
+  // promptUser();
+// });
 
 // Prompt User for Choices
 const promptUser = () => {
@@ -119,27 +118,27 @@ const viewAllEmployees = () => {
                   ORDER BY employee.id ASC`;
   connection.promise().query(sql, (error, response) => {
     if (error) throw error;
-    console.log(chalk.blue.bold(`====================================================================================`));
-    console.log(`                              ` + chalk.yellow.bold(`Current Employees:`));
-    console.log(chalk.blue.bold(`====================================================================================`));
+    console.log((`====================================================================================`));
+    console.log(`                              ` + (`Current Employees:`));
+    console.log((`====================================================================================`));
     console.table(response);
-    console.log(chalk.blue.bold(`====================================================================================`));
+    console.log((`====================================================================================`));
     promptUser();
   });
 };
 
 // View all Roles
 const viewAllRoles = () => {
-  console.log(chalk.blue.bold(`====================================================================================`));
-  console.log(`                              ` + chalk.yellow.bold(`Current Employee Roles:`));
-  console.log(chalk.blue.bold(`====================================================================================`));
+  console.log((`====================================================================================`));
+  console.log(`                              ` + (`Current Employee Roles:`));
+  console.log((`====================================================================================`));
   const sql =     `SELECT role.id, role.title, department.department_name AS department
                   FROM role
                   INNER JOIN department ON role.department_id = department.id`;
   connection.promise().query(sql, (error, response) => {
     if (error) throw error;
       response.forEach((role) => {console.log(role.title);});
-      console.log(chalk.blue.bold(`====================================================================================`));
+      console.log((`====================================================================================`));
       promptUser();
   });
 };
@@ -149,11 +148,11 @@ const viewAllDepartments = () => {
   const sql =   `SELECT department.id AS id, department.department_name AS department FROM department`; 
   connection.promise().query(sql, (error, response) => {
     if (error) throw error;
-    console.log(chalk.blue.bold(`====================================================================================`));
-    console.log(`                              ` + chalk.yellow.bold(`All Departments:`));
-    console.log(chalk.blue.bold(`====================================================================================`));
+    console.log((`====================================================================================`));
+    console.log(`                              ` + (`All Departments:`));
+    console.log((`====================================================================================`));
     console.table(response);
-    console.log(chalk.blue.bold(`====================================================================================`));
+    console.log((`====================================================================================`));
     promptUser();
   });
 };
@@ -168,20 +167,20 @@ const viewEmployeesByDepartment = () => {
                   LEFT JOIN department ON role.department_id = department.id`;
   connection.query(sql, (error, response) => {
     if (error) throw error;
-      console.log(chalk.blue.bold(`====================================================================================`));
-      console.log(`                              ` + chalk.yellow.bold(`Employees by Department:`));
-      console.log(chalk.blue.bold(`====================================================================================`));
+      console.log((`====================================================================================`));
+      console.log(`                              ` + (`Employees by Department:`));
+      console.log((`====================================================================================`));
       console.table(response);
-      console.log(chalk.blue.bold(`====================================================================================`));
+      console.log(c(`====================================================================================`));
       promptUser();
     });
 };
 
 //View all Departments by Budget
 const viewDepartmentBudget = () => {
-  console.log(chalk.blue.bold(`====================================================================================`));
-  console.log(`                              ` + chalk.yellow.bold(`Budget By Department:`));
-  console.log(chalk.blue.bold(`====================================================================================`));
+  console.log((`====================================================================================`));
+  console.log(`                              ` + (`Budget By Department:`));
+  console.log((`====================================================================================`));
   const sql =     `SELECT department_id AS id, 
                   department.department_name AS department,
                   SUM(salary) AS budget
@@ -190,7 +189,7 @@ const viewDepartmentBudget = () => {
   connection.query(sql, (error, response) => {
     if (error) throw error;
       console.table(response);
-      console.log(chalk.blue.bold(`====================================================================================`));
+      console.log((`====================================================================================`));
       promptUser();
   });
 };
@@ -326,9 +325,9 @@ const addRole = () => {
 
             connection.promise().query(sql, crit, (error) => {
               if (error) throw error;
-              console.log(chalk.blue.bold(`====================================================================================`));
-              console.log(chalk.yellowBright(`Role successfully created!`));
-              console.log(chalk.blue.bold(`====================================================================================`));
+              console.log((`====================================================================================`));
+              console.log((`Role successfully created!`));
+              console.log((`====================================================================================`));
               viewAllRoles();
             });
           });
@@ -352,7 +351,7 @@ const addDepartment = () => {
         connection.query(sql, answer.newDepartment, (error, response) => {
           if (error) throw error;
           console.log(``);
-          console.log(chalk.yellowBright(answer.newDepartment + ` Department successfully created!`));
+          console.log((answer.newDepartment + ` Department successfully created!`));
           console.log(``);
           viewAllDepartments();
         });
@@ -414,9 +413,9 @@ const updateEmployeeRole = () => {
               [newTitleId, employeeId],
               (error) => {
                 if (error) throw error;
-                console.log(chalk.yellowBright.bold(`====================================================================================`));
-                console.log(chalk.yellowBright(`Employee Role Updated`));
-                console.log(chalk.yellowBright.bold(`====================================================================================`));
+                console.log((`====================================================================================`));
+                console.log((`Employee Role Updated`));
+                console.log((`====================================================================================`));
                 promptUser();
               }
             );
@@ -465,9 +464,9 @@ const updateEmployeeManager = () => {
           });
 
           if (validate.isSame(answer.chosenEmployee, answer.newManager)) {
-            console.log(chalk.redBright.bold(`====================================================================================`));
-            console.log(chalk.redBright(`Invalid Manager Selection`));
-            console.log(chalk.redBright.bold(`====================================================================================`));
+            console.log((`====================================================================================`));
+            console.log((`Invalid Manager Selection`));
+            console.log((`====================================================================================`));
             promptUser();
           } else {
             let sql = `UPDATE employee SET employee.manager_id = ? WHERE employee.id = ?`;
@@ -477,9 +476,9 @@ const updateEmployeeManager = () => {
               [managerId, employeeId],
               (error) => {
                 if (error) throw error;
-                console.log(chalk.yellowBright.bold(`====================================================================================`));
-                console.log(chalk.yellowBright(`Employee Manager Updated`));
-                console.log(chalk.yellowBright.bold(`====================================================================================`));
+                console.log((`====================================================================================`));
+                console.log((`Employee Manager Updated`));
+                console.log((`====================================================================================`));
                 promptUser();
               }
             );
@@ -523,9 +522,9 @@ const removeEmployee = () => {
           let sql = `DELETE FROM employee WHERE employee.id = ?`;
           connection.query(sql, [employeeId], (error) => {
             if (error) throw error;
-            console.log(chalk.redBright.bold(`====================================================================================`));
-            console.log(chalk.redBright(`Employee Successfully Removed`));
-            console.log(chalk.RedBright.bold(`====================================================================================`));
+            console.log((`====================================================================================`));
+            console.log((`Employee Successfully Removed`));
+            console.log((`====================================================================================`));
             viewAllEmployees();
           });
         });
@@ -562,9 +561,9 @@ const removeRole = () => {
           let sql =   `DELETE FROM role WHERE role.id = ?`;
           connection.promise().query(sql, [roleId], (error) => {
             if (error) throw error;
-            console.log(chalk.redBright.bold(`====================================================================================`));
-            console.log(chalk.yellowBright(`Role Successfully Removed`));
-            console.log(chalk.redBright.bold(`====================================================================================`));
+            console.log((`====================================================================================`));
+            console.log((`Role Successfully Removed`));
+            console.log((`====================================================================================`));
             viewAllRoles();
           });
         });
@@ -600,9 +599,9 @@ const removeDepartment = () => {
           let sql =     `DELETE FROM department WHERE department.id = ?`;
           connection.promise().query(sql, [departmentId], (error) => {
             if (error) throw error;
-            console.log(chalk.redBright.bold(`====================================================================================`));
-            console.log(chalk.redBright(`Department Successfully Removed`));
-            console.log(chalk.redBright.bold(`====================================================================================`));
+            console.log((`====================================================================================`));
+            console.log((`Department Successfully Removed`));
+            console.log((`====================================================================================`));
             viewAllDepartments();
           });
         });
