@@ -10,13 +10,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "chalk": "^5.2.0",
         "dotenv": "^16.1.4",
         "figlet": "^1.6.0",
         "inquirer": "^8.2.4",
-        "mysql2": "^3.3.4",
-        "nodemon": "^2.0.22",
-        "table": "^6.8.1",
-        "validator": "^13.9.0"
+        "mysql2": "^3.3.2",
+        "table": "^6.8.1"
     }
 }
